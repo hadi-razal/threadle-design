@@ -14,13 +14,12 @@ const OurHappyCustomers = () => {
 
     const handleScrollRight = () => {
         try {
-            const scrollAmount = 300;
+            const scrollAmount = 400;
             if (scrollContainerRef.current) {
                 scrollContainerRef.current.scrollBy({
                     left: +scrollAmount,
                     behavior: 'smooth',
                 });
-                console.log('Scrolled successfully!');
             }
         } catch (error) {
             console.error('Error scrolling:', error);
@@ -29,33 +28,57 @@ const OurHappyCustomers = () => {
 
     const handleScrollLeft = () => {
         try {
-            const scrollAmount = 300;
+            const scrollAmount = 400;
             if (scrollContainerRef.current) {
                 scrollContainerRef.current.scrollBy({
-                    left: -scrollAmount,  // Change the sign to negative
+                    left: -scrollAmount,
                     behavior: 'smooth',
                 });
-                console.log('Scrolled successfully!');
             }
         } catch (error) {
             console.error('Error scrolling:', error);
         }
     };
+
     return (
-        <div className=' flex flex-col items-center justify-center gap-3 w-full lg:px-10 px-5 mt-5 lg:mt-10 mb-10'>
-            <div className='flex items-center justify-between w-full '>
-                <h1 className='lg:text-[40px] text-[25px] font-bold text-center'>Our Happy Customers</h1>
-                <div className='flex items-center justify-center gap-5 px-10'>
-                    <GoChevronLeft onClick={handleScrollLeft} className='hover:scale-110 z-10 bg-black text-white  rounded-full cursor-pointer' size={30} />
-                    <GoChevronRight onClick={handleScrollRight} className='z-10  bg-black text-white rounded-full cursor-pointer hover:scale-110' size={30} />
+        <section className='w-full py-20 px-4 md:px-10 bg-slate-50 border-t border-slate-100'>
+            <div className='max-w-7xl mx-auto flex flex-col items-center justify-center gap-10 w-full'>
+                <div className='flex flex-col md:flex-row items-center md:items-end justify-between w-full px-2'>
+                    <div className="flex flex-col items-center md:items-start gap-3">
+                        <span className="text-td-primary font-semibold tracking-[0.2em] uppercase text-xs">Testimonials</span>
+                        <h2 className='text-center md:text-left font-black tracking-tighter text-td-secondary md:text-[40px] text-[32px]'>
+                            Our Happy Customers
+                        </h2>
+                        <div className="w-16 h-1 bg-td-primary rounded-full mt-2 hidden md:block"></div>
+                    </div>
+                    
+                    <div className='hidden md:flex items-center justify-center gap-4'>
+                        <div 
+                            onClick={handleScrollLeft} 
+                            className='flex items-center justify-center w-12 h-12 bg-white border border-slate-200 text-td-secondary shadow-sm rounded-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-td-primary'
+                        >
+                            <GoChevronLeft size={24} />
+                        </div>
+                        <div 
+                            onClick={handleScrollRight} 
+                            className='flex items-center justify-center w-12 h-12 bg-white border border-slate-200 text-td-secondary shadow-sm rounded-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-td-primary'
+                        >
+                            <GoChevronRight size={24} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className='relative w-full overflow-hidden'>
+                    <div ref={scrollContainerRef} className='w-full flex justify-start items-center gap-6 px-4 md:px-2 pb-6 min-h-[250px] overflow-x-scroll hideScrollBar snap-x snap-mandatory scroll-smooth'>
+                        {review.map((item: any, i: number) => (
+                            <div key={i} className="snap-center">
+                                <CustomerReviewCard item={item} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <div ref={scrollContainerRef} className='w-full flex gap-2 overflow-x-scroll hideScrollBar'>
-                {review.map((item: any, i: number) => (
-                    <CustomerReviewCard key={i} item={item} />
-                ))}
-            </div>
-        </div>
+        </section>
     )
 }
 
